@@ -1,4 +1,3 @@
-
 const OPENAI_API_KEY = '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';
 
 export const generateLarryAgranResponse = async (userMessage: string): Promise<string> => {
@@ -10,7 +9,7 @@ export const generateLarryAgranResponse = async (userMessage: string): Promise<s
         'Authorization': `Bearer ${OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4',
+        model: 'gpt-3.5-turbo',
         messages: [
           {
             role: 'system',
@@ -40,6 +39,8 @@ Respond as Larry Agran would, drawing on his actual policy positions and communi
     });
 
     if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      console.error('OpenAI API error:', response.status, errorData);
       throw new Error(`OpenAI API error: ${response.status}`);
     }
 
